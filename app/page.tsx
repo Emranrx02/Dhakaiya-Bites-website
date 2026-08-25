@@ -90,13 +90,14 @@ export default function Home(){
  const [menuOpen, setMenuOpen] = useState(false);
  const [page, setPage] = useState(0);
  const [id, setId] = useState("");
+ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const showMenu = (index = 0) => {
   setPage(index);
   setMenuOpen(true);
  };
  return <main>
   <div className="notice"><span>🍔</span> Fast Bites. Big Flavour. Every Craving, One Place. <a href="tel:+8801603365308">Call 01603 365 308</a></div>
-    <header className="header wrap"><a href="#home" className="logo"><img src="/brand/logo.png" alt="Dhakaiya Bites logo"/><div><b>Dhakaiya Bites</b><small>GOOD FOOD • EVERY BITE</small></div></a><nav><a href="#home">Home</a><button className="nav-menu-button" onClick={()=>showMenu(0)}>Menu</button><a href="#about">About</a><a href="#verify">Staff Verify</a><a href="#contact">Contact</a></nav><Link className="btn btn-small" href="/order">Order Now <span>↗</span></Link></header>
+    <header className="header wrap"><a href="#home" className="logo"><img src="/brand/logo.png" alt="Dhakaiya Bites logo"/><div><b>Dhakaiya Bites</b><small>GOOD FOOD • EVERY BITE</small></div></a><div className="header-actions"><Link className="btn btn-small" href="/order">Order <span>↗</span></Link><button className={`menu-toggle ${mobileMenuOpen ? "active" : ""}`} onClick={()=>setMobileMenuOpen(v=>!v)} aria-label="Toggle navigation" aria-expanded={mobileMenuOpen}><i/><i/><i/></button></div><nav className={mobileMenuOpen ? "mobile-open" : ""}><a href="#home" onClick={()=>setMobileMenuOpen(false)}>Home</a><button className="nav-menu-button" onClick={()=>{showMenu(0);setMobileMenuOpen(false)}}>Menu</button><a href="#about" onClick={()=>setMobileMenuOpen(false)}>About</a><a href="#verify" onClick={()=>setMobileMenuOpen(false)}>Staff Verify</a><a href="#contact" onClick={()=>setMobileMenuOpen(false)}>Contact</a></nav></header>
 
   <section className="hero" id="home"><div className="hero-copy wrap"><div className="copy"><div className="pill"><i/> MIRPUR&apos;S FAVOURITE FAST FOOD</div><h1>ক্ষুধা যখনই,<br/><em>Dhakaiya Bites তখনই।</em></h1><p>এক কামড়েই মন ভালো! Crispy chicken, juicy burger, rice bowl কিংবা refreshing drinks—প্রতিটি craving-এর জন্য আছে দারুণ কিছু।</p><div className="hero-tagline">FAST BITES. <b>BIG FLAVOUR.</b></div><div className="actions"><Link className="btn" href="/order">Order Now <span>↗</span></Link><a className="outline" href="/menu">Explore Full Menu</a></div><div className="stats"><span><b>40+</b><small>Menu Items</small></span><span><b>11</b><small>Categories</small></span><span><b>100%</b><small>Freshly Prepared</small></span></div></div><div className="food-stage"><div className="yellow-ring"/><img src="/brand/hot-chicken.jpg" alt="Dhakaiya Bites hot chicken"/><div className="hero-logo"><img src="/brand/logo.png" alt="Dhakaiya Bites official logo"/></div><div className="price-pop"><small>STARTING FROM</small><b>৳109</b></div><div className="fresh-pop">🔥 Fresh & Crispy</div></div></div></section>
 
