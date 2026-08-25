@@ -1,0 +1,2 @@
+import {staff} from "@/data/staff";
+export default function AdminGuide(){return <main className="admin-page"><h1>Staff Management</h1><p className="admin-alert">Starter mode: edit <code>data/staff.ts</code> to add, update or deactivate staff. Connect Supabase before using this page as a real admin dashboard.</p><div className="admin-table">{staff.map(s=><article key={s.code}><img src={s.photo} alt=""/><div><b>{s.name}</b><small>{s.code} · {s.role}</small></div><span className={s.status}>{s.status}</span></article>)}</div></main>}

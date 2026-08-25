@@ -1,0 +1,3 @@
+.hero-tagline{margin-top:18px;font-size:11px;letter-spacing:2.4px;color:#f3d6cf;font-weight:800}.hero-tagline b{color:var(--yellow)}
+.hero-logo{position:absolute;left:8px;top:64px;width:94px;height:94px;border-radius:50%;background:#fff;padding:5px;box-shadow:0 14px 30px #45050066;border:4px solid var(--yellow);z-index:3}.hero-logo img{width:100%;height:100%;border-radius:50%;object-fit:cover}.food-stage>img{object-position:center 45%}
+@media(max-width:580px){.hero-logo{width:72px;height:72px;top:18px;left:0}.hero-tagline{font-size:9px}}
