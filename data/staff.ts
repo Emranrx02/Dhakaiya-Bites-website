@@ -2,7 +2,7 @@ export type Staff={code:string;name:string;role:string;photo:string;joined:strin
 
 // Add or edit staff here. Keep private data (NID, home address, salary) out of this file.
 export const staff:Staff[]=[
- {code:"DB-1024",name:"Md Arif Hasan",role:"Service Team",photo:"/brand/logo.png",joined:"25 August 2026",status:"active",note:"Verified Dhakaiya Bites team member"},
+ {code:"DB-1024",name:"IMRAN HOSSEN",role:"Manager, Dhakaiya Bites",photo:"/brand/logo.png",joined:"14 February 2026",status:"active",note:"Officially verified Manager of Dhakaiya Bites"},
  {code:"DB-1025",name:"Sample Staff",role:"Kitchen Team",photo:"/brand/logo.png",joined:"25 August 2026",status:"inactive",note:"No longer an active team member"}
 ];
 
