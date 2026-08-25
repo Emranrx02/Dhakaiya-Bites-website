@@ -714,3 +714,21 @@ body{overflow-x:hidden}
   .stats b{font-size:23px!important}
   .stats small{font-size:7px!important;line-height:1.35!important}
 }
+
+
+/* Order success confirmation */
+.order-success-card{border:1px solid rgba(100,208,222,.25);border-radius:22px;padding:45px 38px;background:linear-gradient(145deg,rgba(10,32,49,.96),rgba(7,23,38,.96));text-align:center;box-shadow:0 35px 80px rgba(0,0,0,.35)}
+.success-icon{display:grid;width:78px;height:78px;margin:0 auto 20px;place-items:center;border-radius:50%;background:linear-gradient(135deg,#25d366,#159746);color:#fff;font-size:35px;font-weight:900;box-shadow:0 14px 35px rgba(37,211,102,.25)}
+.success-label{color:#64d0de;font-size:8px;font-weight:900;letter-spacing:2px}
+.order-success-card h2{margin:10px 0;font-family:Georgia,serif;font-size:34px;color:#fff}
+.order-success-card>p{max-width:510px;margin:0 auto;color:#9fb2c0;font-size:12px;line-height:1.75}
+.success-note{display:flex;align-items:center;gap:12px;margin:25px 0;padding:14px;border:1px solid rgba(255,191,25,.2);border-radius:11px;background:rgba(255,191,25,.07);text-align:left}
+.success-note>span{font-size:24px}
+.success-note>div{display:flex;flex-direction:column}
+.success-note b{font-size:11px;color:#fff}
+.success-note small{margin-top:4px;color:#8297a5;font-size:9px}
+.success-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.success-actions button,.success-actions a{display:flex;min-height:48px;align-items:center;justify-content:center;border-radius:9px;padding:0 14px;font-size:10px;font-weight:900;text-decoration:none;cursor:pointer}
+.success-actions button{border:0;background:#ffbf19;color:#211713}
+.success-actions a{border:1px solid rgba(255,255,255,.18);color:#fff;background:transparent}
+@media(max-width:600px){.order-success-card{padding:34px 18px}.success-icon{width:66px;height:66px;font-size:29px}.order-success-card h2{font-size:28px}.success-actions{grid-template-columns:1fr}}
