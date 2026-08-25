@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import {useEffect,useRef,useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 
@@ -71,6 +71,14 @@ const categories = [
     from: "৳39",
   },
 ];
+const galleryImages = [
+  {src:"/gallery/gallery-01.webp",title:"Good food, better together",label:"CUSTOMER MOMENTS"},
+  {src:"/gallery/gallery-02.webp",title:"Crafted to refresh",label:"FROM OUR COUNTER"},
+  {src:"/gallery/gallery-03.webp",title:"Celebrating every connection",label:"DHAKAIYA MOMENTS"},
+  {src:"/gallery/gallery-04.webp",title:"Little bites, big smiles",label:"HAPPY CUSTOMERS"},
+  {src:"/gallery/gallery-05.webp",title:"Your neighbourhood food stop",label:"MIRPUR 10"}
+];
+
 const menuPages = [
     "/menu/menu-01.JPG",
     "/menu/menu-02.JPG",
@@ -91,6 +99,10 @@ export default function Home(){
  const [page, setPage] = useState(0);
  const [id, setId] = useState("");
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+ const [galleryIndex,setGalleryIndex]=useState(0);
+ const galleryTouchStart=useRef<number|null>(null);
+ useEffect(()=>{const timer=setInterval(()=>setGalleryIndex(index=>(index+1)%galleryImages.length),5000);return()=>clearInterval(timer)},[]);
+ const moveGallery=(direction:number)=>setGalleryIndex(index=>(index+direction+galleryImages.length)%galleryImages.length);
  const showMenu = (index = 0) => {
   setPage(index);
   setMenuOpen(true);
@@ -106,6 +118,23 @@ export default function Home(){
   <section className="menu wrap" id="menu"><div className="heading"><div><span>WHAT ARE YOU CRAVING?</span><h2>Our crowd favourites</h2></div><button onClick={()=>showMenu()}>View full menu <b>→</b></button></div><div className="category-grid">{categories.map((c,i)=><article className="category" key={c.title}><div className="cat-photo"><img src={c.image} alt={c.title}/><span>FROM {c.from}</span></div><div className="cat-body"><h3>{c.title}</h3><ul>{c.items.map(x=><li key={x}>{x}</li>)}</ul><button onClick={()=>showMenu(Math.min(i,menuPages.length-1))}>See menu <span>→</span></button></div></article>)}</div></section>
 
   <section className="about" id="about"><div className="wrap about-grid"><div className="about-art"><img src="/brand/burger.jpg" alt="Dhakaiya Bites burger"/><div className="since"><b>100%</b><small>Freshly Prepared</small></div></div><div className="about-copy"><span>OUR STORY</span><h2>Good food.<br/>Good mood. <em>Every bite.</em></h2><p>Dhakaiya Bites is your neighbourhood fast-food destination in Mirpur 10. Our menu brings together bold flavours, fresh ingredients and satisfying portions—all in one place.</p><div className="checks"><span>✓ Freshly prepared</span><span>✓ Dine-in & delivery</span><span>✓ Trade licensed</span><span>✓ Wide menu selection</span></div><a className="btn" href="https://www.instagram.com/dhakaiyabites">Follow @dhakaiyabites</a></div></div></section>
+
+  <section className="gallery-section" aria-labelledby="gallery-title">
+    <div className="wrap gallery-heading"><div><span>INSIDE DHAKAIYA BITES</span><h2 id="gallery-title">Real food. Real people. <em>Real moments.</em></h2></div><p>A little look at the flavours, smiles and everyday moments that make Dhakaiya Bites special.</p></div>
+    <div className="wrap gallery-slider">
+      <div className="gallery-frame" onTouchStart={event=>galleryTouchStart.current=event.touches[0].clientX} onTouchEnd={event=>{if(galleryTouchStart.current===null)return;const distance=event.changedTouches[0].clientX-galleryTouchStart.current;if(Math.abs(distance)>45)moveGallery(distance>0?-1:1);galleryTouchStart.current=null}}>
+        <div className="gallery-slide" key={galleryImages[galleryIndex].src}>
+          <img className="gallery-backdrop" src={galleryImages[galleryIndex].src} alt="" aria-hidden="true"/>
+          <img className="gallery-image" src={galleryImages[galleryIndex].src} alt={galleryImages[galleryIndex].title}/>
+          <div className="gallery-caption"><small>{galleryImages[galleryIndex].label}</small><b>{galleryImages[galleryIndex].title}</b></div>
+        </div>
+        <button className="gallery-arrow gallery-prev" type="button" aria-label="Previous photo" onClick={()=>moveGallery(-1)}>‹</button>
+        <button className="gallery-arrow gallery-next" type="button" aria-label="Next photo" onClick={()=>moveGallery(1)}>›</button>
+        <div className="gallery-count"><b>{String(galleryIndex+1).padStart(2,"0")}</b><span>/ {String(galleryImages.length).padStart(2,"0")}</span></div>
+      </div>
+      <div className="gallery-dots">{galleryImages.map((image,index)=><button type="button" key={image.src} className={index===galleryIndex?"active":""} aria-label={`Show photo ${index+1}`} onClick={()=>setGalleryIndex(index)}/>)}</div>
+    </div>
+  </section>
 
   <section className="verify" id="verify"><div className="wrap verify-grid"><div><span className="section-tag">TRUST & SAFETY</span><h2>Verify a Dhakaiya Bites staff member</h2><p>Enter the Staff ID shown on their official ID card. We only display approved public work details.</p></div><div className="verify-card"><label>STAFF ID NUMBER</label><form onSubmit={e=>{e.preventDefault();router.push(`/verify/${id.toUpperCase().replace(/^DB-/,"")}`)}}><div><span>DB-</span><input value={id} onChange={e=>setId(e.target.value)} placeholder="1024" required/></div><button>Verify staff</button></form><small className="safe">🔒 No NID, address or private phone number is shown.</small></div></div></section>
 
