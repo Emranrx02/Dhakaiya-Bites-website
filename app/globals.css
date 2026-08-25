@@ -751,3 +751,39 @@ body{overflow-x:hidden}
 @media(min-width:701px){
   .mobile-menu{display:none!important}
 }
+
+
+/* Real restaurant photo hero background */
+.hero{
+  position:relative;
+  isolation:isolate;
+  background:#8f160f!important;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  z-index:-2;
+  inset:-28px;
+  background:url("/brand/restaurant-bg.webp") center 58% / cover no-repeat;
+  filter:blur(7px);
+  transform:scale(1.06);
+  opacity:.9;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  background:linear-gradient(90deg,rgba(82,8,5,.96) 0%,rgba(151,20,12,.88) 48%,rgba(62,7,5,.74) 100%);
+}
+@media(max-width:700px){
+  .hero::before{
+    inset:-18px;
+    background-position:43% center;
+    filter:blur(5px);
+    transform:scale(1.08);
+  }
+  .hero::after{
+    background:linear-gradient(180deg,rgba(111,13,8,.91),rgba(136,18,10,.86) 58%,rgba(77,8,5,.9));
+  }
+}
