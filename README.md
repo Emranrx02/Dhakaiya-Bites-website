@@ -1,180 +1,79 @@
-Dhakaiya Bites — Restaurant Website
+# Dhakaiya Bites Website
 
-A modern, responsive restaurant website developed for Dhakaiya Bites, a fast-food restaurant based in Mirpur 10, Dhaka. The project presents the restaurant's brand, complete menu, contact information, and a staff verification workflow in a clean customer-facing experience.
+Official website for **Dhakaiya Bites**, a real fast-food restaurant in Mirpur 10, Dhaka. The project presents the brand, full digital menu, staff verification flow, and contact details in a clean, mobile-friendly experience.
 
-Fast Bites. Big Flavour. Every craving, one place.
+## Overview
 
-Project Overview
+Dhakaiya Bites is built as a restaurant-first marketing site with a dedicated menu gallery, public staff lookup, and privacy-conscious verification pages. The goal is to make the restaurant easy to explore, easy to contact, and safe to verify.
 
-This project was created as a real-world business website for Dhakaiya Bites. It focuses on mobile responsiveness, clear menu discovery, direct ordering, brand consistency, and customer trust.
+## Stack
 
-The website includes the restaurant's official branding and menu assets. Its staff verification structure allows visitors to check a team member using a unique staff ID and view approved public employment information.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Custom CSS
 
-Key Features
+## Features
 
-Responsive restaurant landing page
+- Full digital menu with 11 menu pages
+- Category cards for featured items and pricing
+- Dedicated full menu page at `/menu`
+- Staff ID verification page
+- Public staff profiles with QR-based lookup support
+- Privacy protections for sensitive staff details
+- Direct call-to-order and map links
+- Responsive layout for mobile and desktop
 
-Official Dhakaiya Bites branding
+## Project Structure
 
-Full multi-page digital food menu
+- `app/page.tsx` - homepage and menu entry point
+- `app/menu/page.tsx` - full menu gallery page
+- `app/verify/[code]/page.tsx` - staff verification profile page
+- `app/admin/page.tsx` - admin-facing view
+- `components/StaffQr.tsx` - QR/profile helper component
+- `data/staff.ts` - staff data source
+- `public/brand/` - brand images and logo assets
+- `public/menu/` - menu page images
 
-Menu categories with pricing previews
+## Local Setup
 
-Direct call-to-order functionality
+1. Install dependencies.
+	```bash
+	npm install
+	```
+2. Start the development server.
+	```bash
+	npm run dev
+	```
+3. Open the app in your browser.
+	```
+	http://localhost:3000
+	```
 
-Restaurant address and map direction links
+## Deployment
 
-Staff verification using unique staff IDs
+This project is ready for Vercel deployment.
 
-Active and inactive staff status
+1. Push the repository to GitHub.
+2. Import the repo into Vercel.
+3. Set environment variables if needed.
+4. Deploy the main branch.
 
-Individual staff verification pages
+## Future Roadmap
 
-QR code generation for staff profiles
+- Supabase backend for structured staff/admin data
+- Admin dashboard for menu and staff management
+- Better analytics and customer engagement tooling
+- Expanded QR-based staff profile workflow
 
-Privacy-focused public staff information
+## Portfolio
 
-SEO and social-sharing metadata
+Created by **Emran Haque**
 
-Vercel-ready production configuration
+- Portfolio: https://emranhaque.com
+- GitHub: https://github.com/Emranrx02
 
-Staff Verification
+## License
 
-Each staff member can have a unique verification URL:
-
-/verify/1024
-
-The public verification page can display:
-
-Staff name and photograph
-
-Designation
-
-Staff ID
-
-Joining date
-
-Active or inactive status
-
-Verification QR code
-
-Sensitive information such as NID numbers, home addresses, salaries, and private phone numbers is intentionally excluded.
-
-The current version uses a simple file-based staff data structure for easy development. A database-backed admin system using Supabase is planned for a future release.
-
-Technology Stack
-
-Framework: Next.js 16
-
-Language: TypeScript
-
-UI: React 19
-
-Styling: Tailwind CSS and custom responsive CSS
-
-Routing: Next.js App Router
-
-QR Codes: qrcode.react
-
-Deployment: Vercel
-
-Version Control: Git and GitHub
-
-Project Structure
-
-dhakaiya-bites-nextjs/
-├── app/
-│   ├── menu/                 # Full digital menu page
-│   ├── verify/[code]/        # Dynamic staff verification profile
-│   ├── admin/                # Admin-ready staff overview
-│   ├── globals.css           # Main website styles
-│   ├── layout.tsx            # Metadata and root layout
-│   └── page.tsx              # Homepage
-├── components/
-│   └── StaffQr.tsx           # Staff QR code component
-├── data/
-│   └── staff.ts              # Staff records for the starter version
-├── public/
-│   ├── brand/                # Logo and brand assets
-│   ├── menu/                 # Full menu images
-│   └── food/                 # Food and category images
-├── .env.example
-├── package.json
-└── README.md
-
-Run Locally
-
-Clone the repository:
-
-git clone https://github.com/Emranrx02/Dhakaiya-Bites-website.git
-cd Dhakaiya-Bites-website
-
-Install dependencies:
-
-npm install
-
-Create the local environment file:
-
-cp .env.example .env.local
-
-Start the development server:
-
-npm run dev
-
-Open http://localhost:3000 in your browser.
-
-Environment Variables
-
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-
-After deployment, replace the local URL with the production domain.
-
-Production Build
-
-npm run build
-npm start
-
-Deployment
-
-The project is configured for deployment on Vercel:
-
-Push the project to GitHub.
-
-Import the repository into Vercel.
-
-Add NEXT_PUBLIC_SITE_URL in the Vercel environment variables.
-
-Deploy the project.
-
-Update the environment variable after connecting a custom domain.
-
-Planned Improvements
-
-Supabase database integration
-
-Secure administrator authentication
-
-Staff management dashboard
-
-Database-driven menu management
-
-Online ordering and cart system
-
-Customer reviews and testimonials
-
-Food availability controls
-
-Improved analytics and SEO
-
-Developer
-
-Emran Haque
-Web3 Growth Strategist & Blockchain Product Coordinator
-Portfolio: emranhaque.com
-GitHub: @Emranrx02
-
-Repository
-
-github.com/Emranrx02/Dhakaiya-Bites-website
-
-This project was designed and developed for the official Dhakaiya Bites restaurant website.
+This repository is for the Dhakaiya Bites restaurant project and related portfolio use.
