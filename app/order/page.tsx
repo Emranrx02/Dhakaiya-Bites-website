@@ -7,6 +7,7 @@ const WHATSAPP_NUMBER = "8801603365308";
 
 export default function OrderPage() {
   const [deliveryType, setDeliveryType] = useState("Home Delivery");
+  const [orderSent, setOrderSent] = useState(false);
 
   function submitOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,6 +45,7 @@ Please confirm my order, delivery charge and total price.
 
     const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
+    setOrderSent(true);
     window.open(whatsappURL, "_blank", "noopener,noreferrer");
   }
 
@@ -109,6 +111,30 @@ Please confirm my order, delivery charge and total price.
           </div>
         </div>
 
+        {orderSent ? (
+          <div className="order-success-card">
+            <div className="success-icon">✓</div>
+            <span className="success-label">ORDER MESSAGE CREATED</span>
+            <h2>Thank you for your order!</h2>
+            <p>
+              আপনার order information WhatsApp-এ তৈরি হয়েছে। Message-টি send করলে
+              আমাদের team দ্রুত total price ও delivery time confirm করবে।
+            </p>
+            <div className="success-note">
+              <span>📱</span>
+              <div>
+                <b>WhatsApp confirmation required</b>
+                <small>Please make sure the prepared message was sent.</small>
+              </div>
+            </div>
+            <div className="success-actions">
+              <button type="button" onClick={() => setOrderSent(false)}>
+                Place Another Order
+              </button>
+              <Link href="/">Back to Home</Link>
+            </div>
+          </div>
+        ) : (
         <form className="order-form-card" onSubmit={submitOrder}>
           <div className="order-form-heading">
             <span>🍔</span>
@@ -190,6 +216,7 @@ Please confirm my order, delivery charge and total price.
             WhatsApp-এ Order পাঠান <span>→</span>
           </button>
         </form>
+        )}
       </section>
     </main>
   );
