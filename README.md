@@ -38,18 +38,23 @@ Dhakaiya Bites is built as a restaurant-first marketing site with a dedicated me
 
 ## Local Setup
 
-1. Install dependencies.
-	```bash
-	npm install
-	```
-2. Start the development server.
-	```bash
-	npm run dev
-	```
-3. Open the app in your browser.
-	```
-	http://localhost:3000
-	```
+Install dependencies.
+
+```bash
+npm install
+```
+
+Start the development server.
+
+```bash
+npm run dev
+```
+
+Open the app in your browser.
+
+```text
+http://localhost:3000
+```
 
 ## Deployment
 
@@ -71,8 +76,8 @@ This project is ready for Vercel deployment.
 
 Created by **Emran Haque**
 
-- Portfolio: https://emranhaque.com
-- GitHub: https://github.com/Emranrx02
+- Portfolio: [emranhaque.com](https://emranhaque.com)
+- GitHub: [Emranrx02](https://github.com/Emranrx02)
 
 ## License
 

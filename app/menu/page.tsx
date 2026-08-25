@@ -40,9 +40,9 @@ export default function FullMenuPage() {
       <div className="menu-order-bar">
         <div>
           <small>ORDER & DELIVERY</small>
-          <strong>01303 583 641</strong>
+          <strong>01603 365 308</strong>
         </div>
-        <a href="tel:01303583641">Call to Order</a>
+        <a href="tel:+8801603365308">Call to Order</a>
       </div>
     </main>
   );
