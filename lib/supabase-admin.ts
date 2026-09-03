@@ -12,21 +12,23 @@ export class SupabaseRequestError extends Error {
 
 function databaseConfig() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !serviceRoleKey) throw new Error("Rewards database is not configured.");
-  return { url: url.replace(/\/$/, ""), serviceRoleKey };
+  const secretKey =
+    process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !secretKey) throw new Error("Rewards database is not configured.");
+  return { url: url.replace(/\/$/, ""), secretKey };
 }
 
 export async function supabaseRest<T>(
   path: string,
   options: { method?: "GET" | "POST" | "PATCH"; body?: unknown; prefer?: string } = {},
 ): Promise<T> {
-  const { url, serviceRoleKey } = databaseConfig();
+  const { url, secretKey } = databaseConfig();
+  const isLegacyJwt = secretKey.startsWith("eyJ");
   const response = await fetch(`${url}/rest/v1/${path}`, {
     method: options.method ?? "GET",
     headers: {
-      apikey: serviceRoleKey,
-      authorization: `Bearer ${serviceRoleKey}`,
+      apikey: secretKey,
+      ...(isLegacyJwt ? { authorization: `Bearer ${secretKey}` } : {}),
       "content-type": "application/json",
       ...(options.prefer ? { prefer: options.prefer } : {}),
     },

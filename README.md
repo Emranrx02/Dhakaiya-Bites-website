@@ -77,7 +77,7 @@ This project is ready for Vercel deployment.
 2. Copy `.env.example` to `.env.local` for local development.
 3. Add the same variables to the Vercel project settings before deploying.
 
-`SUPABASE_SERVICE_ROLE_KEY`, `CASHIER_PIN`, and `CASHIER_SESSION_SECRET` are server-only secrets. Never expose them with a `NEXT_PUBLIC_` prefix.
+`SUPABASE_SECRET_KEY`, `CASHIER_PIN`, and `CASHIER_SESSION_SECRET` are server-only secrets. Never expose them with a `NEXT_PUBLIC_` prefix.
 
 ## Future Roadmap
 
