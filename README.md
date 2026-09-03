@@ -24,6 +24,9 @@ Dhakaiya Bites is built as a restaurant-first marketing site with a dedicated me
 - Privacy protections for sensitive staff details
 - Direct call-to-order and map links
 - Responsive layout for mobile and desktop
+- Digital rewards card with 7-stamp / 15-day logic
+- Cashier approval and free-dish redemption portal
+- Printable in-store rewards QR
 
 ## Project Structure
 
@@ -31,6 +34,9 @@ Dhakaiya Bites is built as a restaurant-first marketing site with a dedicated me
 - `app/menu/page.tsx` - full menu gallery page
 - `app/verify/[code]/page.tsx` - staff verification profile page
 - `app/admin/page.tsx` - admin-facing view
+- `app/rewards/page.tsx` - customer stamp card
+- `app/cashier/page.tsx` - protected cashier portal
+- `supabase/rewards.sql` - rewards database schema and transaction functions
 - `components/StaffQr.tsx` - QR/profile helper component
 - `data/staff.ts` - staff data source
 - `public/brand/` - brand images and logo assets
@@ -65,9 +71,16 @@ This project is ready for Vercel deployment.
 3. Set environment variables if needed.
 4. Deploy the main branch.
 
+### Rewards database
+
+1. Create a Supabase project and run `supabase/rewards.sql` in its SQL editor.
+2. Copy `.env.example` to `.env.local` for local development.
+3. Add the same variables to the Vercel project settings before deploying.
+
+`SUPABASE_SERVICE_ROLE_KEY`, `CASHIER_PIN`, and `CASHIER_SESSION_SECRET` are server-only secrets. Never expose them with a `NEXT_PUBLIC_` prefix.
+
 ## Future Roadmap
 
-- Supabase backend for structured staff/admin data
 - Admin dashboard for menu and staff management
 - Better analytics and customer engagement tooling
 - Expanded QR-based staff profile workflow
