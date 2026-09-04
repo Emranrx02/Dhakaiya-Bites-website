@@ -156,7 +156,10 @@ export default function RewardsClient() {
           <article><span>02</span><b>Cashier approves</b><p>Show your request after ordering. The cashier approves one stamp.</p></article>
           <article><span>03</span><b>Enjoy it free</b><p>Complete seven stamps within fifteen days and unlock a free dish.</p></article>
         </div>
-        <footer><span>© 2026 Dhakaiya Bites.</span><Link href="/cashier">Staff cashier portal →</Link></footer>
+        <div className={styles.rewardFooter}>
+          <span>© 2026 Dhakaiya Bites.</span>
+          <span>7 stamps · 15 days · 1 free dish</span>
+        </div>
       </section>
     </main>
   );
