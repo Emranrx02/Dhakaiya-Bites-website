@@ -190,13 +190,13 @@ export default function CashierClient() {
         {error && <p className={styles.error}>{error}</p>}
 
         {queue.rewards.length > 0 && <section className={styles.queueSection}><h2>Free dishes ready</h2><div className={styles.queueGrid}>{queue.rewards.map((reward) => (
-          <article key={reward.customerId} className={styles.rewardQueueCard}><div><b>{reward.name}</b><p>{reward.phone} · Redeemed before: {reward.rewardsRedeemed}</p></div><button className={styles.redeemButton} disabled={actingId !== null} onClick={() => void redeem(reward.customerId)}>{actingId === `redeem-${reward.customerId}` ? "Redeeming..." : "Redeem free dish"}</button></article>
+          <article key={reward.customerId} className={styles.rewardQueueCard}><div className={styles.rewardCustomer}><small>CUSTOMER</small><b>{reward.name}</b><a className={styles.customerPhone} href={`tel:+88${reward.phone}`}>{reward.phone}</a><p>Redeemed before: {reward.rewardsRedeemed}</p></div><button className={styles.redeemButton} disabled={actingId !== null} onClick={() => void redeem(reward.customerId)}>{actingId === `redeem-${reward.customerId}` ? "Redeeming..." : "Redeem free dish"}</button></article>
         ))}</div></section>}
 
         <section className={styles.queueSection}><h2>Waiting for approval</h2>
           {queue.pending.length === 0 ? <div className={styles.empty}><b>All caught up</b>New customer requests will appear here automatically.</div> : <div className={styles.queueGrid}>{queue.pending.map((item) => (
             <article key={item.id} className={styles.queueCard}>
-              <header><div><b>{item.name}</b><p>{item.phone}</p></div><span>{timeAgo(item.requestedAt)}</span></header>
+              <header><div className={styles.customerIdentity}><small>CUSTOMER</small><b>{item.name}</b><a className={styles.customerPhone} href={`tel:+88${item.phone}`}>{item.phone}</a></div><span>{timeAgo(item.requestedAt)}</span></header>
               <div className={styles.queueProgress}><span>Current progress</span><span>{item.stampCount}/7</span></div>
               <div className={styles.progress}><span style={{ width: `${(item.stampCount / 7) * 100}%` }} /></div>
               <div className={styles.queueActions}><button disabled={actingId !== null} onClick={() => void requestAction(item.id, "reject")}>Reject</button><button disabled={actingId !== null} onClick={() => void requestAction(item.id, "approve")}>{actingId === `approve-${item.id}` ? "Approving..." : "Approve stamp"}</button></div>
