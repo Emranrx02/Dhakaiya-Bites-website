@@ -23,9 +23,14 @@ export default function FullMenuPage() {
           <h1>Explore Our Full Menu</h1>
           <p>Fast Bites. Big Flavour. Every craving, one place.</p>
         </div>
-        <Link href="/" aria-label="Back Home">
-          ← Back Home
-        </Link>
+        <nav className="full-menu-actions" aria-label="Menu page navigation">
+          <Link className="full-menu-home-link" href="/" aria-label="Back Home">
+            ← Back Home
+          </Link>
+          <Link className="full-menu-rewards-link" href="/rewards">
+            Rewards <small>7 stamps → 1 free dish</small>
+          </Link>
+        </nav>
       </header>
 
       <section className="full-menu-grid">
@@ -42,7 +47,10 @@ export default function FullMenuPage() {
           <small>ORDER & DELIVERY</small>
           <strong>01603 365 308</strong>
         </div>
-        <a href="tel:+8801603365308">Call to Order</a>
+        <div className="menu-order-actions">
+          <Link className="menu-reward-link" href="/rewards">Get Stamp</Link>
+          <a className="menu-call-link" href="tel:+8801603365308">Call to Order</a>
+        </div>
       </div>
     </main>
   );
