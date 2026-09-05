@@ -28,7 +28,7 @@ export default function FullMenuPage() {
             ← Back Home
           </Link>
           <Link className="full-menu-rewards-link" href="/rewards">
-            Rewards <small>7 bills → 10% dish reward</small>
+            Rewards <small>7 bills → 1 free dish</small>
           </Link>
         </nav>
       </header>

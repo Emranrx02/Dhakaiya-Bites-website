@@ -13,7 +13,7 @@ export async function POST(_request: Request, context: { params: Promise<{ id: s
       method: "POST",
       body: { p_customer_id: id },
     });
-    return NextResponse.json({ ok: true, message: "Dish reward redeemed and the card was reset." });
+    return NextResponse.json({ ok: true, message: "Free dish redeemed and the card was reset." });
   } catch (error) {
     console.error("Reward redemption failed", error);
     return NextResponse.json({ error: "Could not redeem the reward." }, { status: 500 });
