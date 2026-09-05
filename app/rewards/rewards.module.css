@@ -15,8 +15,36 @@
 .customerPhone{display:block;width:max-content;max-width:100%;margin-top:7px;color:#557068;text-decoration:none;font-size:14px;font-weight:900;letter-spacing:.2px}
 .customerPhone:hover{text-decoration:underline}
 .rewardCustomer .customerPhone{color:#ffdc70}
+.spendSummary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.spendSummary>div{padding:14px;border:1px solid #e8dccb;border-radius:12px;background:#faf6ef}
+.spendSummary small{display:block;color:#71867e;font-size:8px;font-weight:900;letter-spacing:1.2px}
+.spendSummary b{display:block;margin-top:5px;color:#a8170d;font-family:Georgia,serif;font-size:21px}
+.moneyInput{height:48px;display:flex;align-items:center;overflow:hidden;border:1px solid #dbcebd;border-radius:10px;background:#fffcf7}
+.moneyInput:focus-within{border-color:#a8170d;box-shadow:0 0 0 3px #a8170d12}
+.moneyInput>span{padding-left:14px;color:#a8170d;font-weight:900}
+.form .moneyInput input{width:100%;border:0;background:transparent;box-shadow:none}
+.billCheck{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 12px;margin-top:17px;padding:15px;border-radius:12px;background:#fff3d7}
+.billCheck small{color:#7c5321;font-size:8px;font-weight:900;letter-spacing:1.3px}
+.billCheck b{grid-row:1/3;grid-column:2;font-family:Georgia,serif;font-size:28px;color:#a8170d}
+.billCheck span{color:#795f3f;font-size:10px}
+.queueSpend{display:flex;align-items:center;gap:8px;margin-top:12px;color:#60796f;font-size:10px}
+.queueSpend b{color:#15382d;font-size:13px}
+.queueSpend span:last-child{margin-left:auto;color:#a8170d;font-weight:900}
+.cashierRewardValue{margin-top:14px;padding:12px 14px;border:1px solid #ffffff19;border-radius:11px;background:#ffffff0b}
+.cashierRewardValue span{display:block;color:#ffffff9c;font-size:9px;font-weight:900;letter-spacing:1px}
+.cashierRewardValue b{display:block;margin-top:3px;color:#ffdc70;font-size:30px}
+.pendingBill{display:flex;flex-direction:column;margin-top:20px;padding:18px;border:1px solid #ead8b6;border-radius:14px;background:#fff8e9}
+.pendingBill small{color:#865022;font-size:8px;font-weight:900;letter-spacing:1.4px}
+.pendingBill>b{margin-top:5px;color:#a8170d;font-family:Georgia,serif;font-size:30px}
+.pendingBill>span{margin-top:5px;color:#6e756c;font-size:11px;line-height:1.5}
+.pendingBill .success{margin-bottom:0}
 
 @media(max-width:600px){
   .rewardFooter{justify-content:center;flex-direction:column;gap:7px;margin-top:28px;padding:18px 8px 0;text-align:center}
   .customerPhone{font-size:15px}
+  .spendSummary{grid-template-columns:1fr 1fr}
+  .spendSummary b{font-size:18px}
+  .billCheck{grid-template-columns:1fr auto}
+  .queueSpend{align-items:flex-start;flex-wrap:wrap}
+  .queueSpend span:last-child{width:100%;margin-left:0}
 }

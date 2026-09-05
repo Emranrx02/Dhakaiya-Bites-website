@@ -13,6 +13,9 @@ type PendingRequest = {
   stampCount: number;
   expiresAt: string | null;
   rewardReady: boolean;
+  billAmount: number;
+  cycleSpend: number;
+  rewardValue: number;
 };
 
 type Reward = {
@@ -22,6 +25,8 @@ type Reward = {
   stampCount: number;
   expiresAt: string | null;
   rewardsRedeemed: number;
+  cycleSpend: number;
+  rewardValue: number;
 };
 
 type QueueData = {
@@ -38,6 +43,10 @@ function timeAgo(value: string) {
   if (minutes < 1) return "Just now";
   if (minutes < 60) return `${minutes} min ago`;
   return `${Math.floor(minutes / 60)} hr ago`;
+}
+
+function money(value: number) {
+  return `৳${value.toLocaleString("en-BD")}`;
 }
 
 export default function CashierClient() {
@@ -159,7 +168,7 @@ export default function CashierClient() {
         <section className={styles.loginCard}>
           <Link href="/">← Customer page</Link>
           <h1>Cashier portal</h1>
-          <p>Enter the staff PIN to review and approve customer stamp requests.</p>
+          <p>Enter the staff PIN to verify customer bills and approve reward requests.</p>
           <form onSubmit={login}>
             <label htmlFor="cashier-pin">Cashier PIN</label>
             <input id="cashier-pin" type="password" inputMode="numeric" value={pin} onChange={(event) => setPin(event.target.value)} placeholder="••••" required />
@@ -179,7 +188,7 @@ export default function CashierClient() {
       </div></header>
 
       <div className={styles.cashierMain}>
-        <div className={styles.cashierHeading}><div><small>LIVE COUNTER QUEUE</small><h1>Stamp approvals</h1><p>New requests refresh automatically every six seconds.</p></div><Link href="/rewards">← Customer page</Link></div>
+        <div className={styles.cashierHeading}><div><small>LIVE COUNTER QUEUE</small><h1>Bill approvals</h1><p>Match every submitted amount with the receipt before approval. New requests refresh every six seconds.</p></div><Link href="/rewards">← Customer page</Link></div>
         <div className={styles.statGrid}>
           <div className={styles.stat}><b>{queue.stats.pending}</b><span>Pending requests</span></div>
           <div className={styles.stat}><b>{queue.stats.customers}</b><span>Total customers</span></div>
@@ -189,17 +198,19 @@ export default function CashierClient() {
         {notice && <p className={styles.noticeMessage}>{notice}</p>}
         {error && <p className={styles.error}>{error}</p>}
 
-        {queue.rewards.length > 0 && <section className={styles.queueSection}><h2>Free dishes ready</h2><div className={styles.queueGrid}>{queue.rewards.map((reward) => (
-          <article key={reward.customerId} className={styles.rewardQueueCard}><div className={styles.rewardCustomer}><small>CUSTOMER</small><b>{reward.name}</b><a className={styles.customerPhone} href={`tel:+88${reward.phone}`}>{reward.phone}</a><p>Redeemed before: {reward.rewardsRedeemed}</p></div><button className={styles.redeemButton} disabled={actingId !== null} onClick={() => void redeem(reward.customerId)}>{actingId === `redeem-${reward.customerId}` ? "Redeeming..." : "Redeem free dish"}</button></article>
+        {queue.rewards.length > 0 && <section className={styles.queueSection}><h2>Dish rewards ready</h2><div className={styles.queueGrid}>{queue.rewards.map((reward) => (
+          <article key={reward.customerId} className={styles.rewardQueueCard}><div className={styles.rewardCustomer}><small>CUSTOMER</small><b>{reward.name}</b><a className={styles.customerPhone} href={`tel:+88${reward.phone}`}>{reward.phone}</a><div className={styles.cashierRewardValue}><span>Reward limit</span><b>{money(reward.rewardValue)}</b></div><p>7-bill spend: {money(reward.cycleSpend)} · Redeemed before: {reward.rewardsRedeemed}</p></div><button className={styles.redeemButton} disabled={actingId !== null} onClick={() => void redeem(reward.customerId)}>{actingId === `redeem-${reward.customerId}` ? "Redeeming..." : `Redeem up to ${money(reward.rewardValue)}`}</button></article>
         ))}</div></section>}
 
         <section className={styles.queueSection}><h2>Waiting for approval</h2>
           {queue.pending.length === 0 ? <div className={styles.empty}><b>All caught up</b>New customer requests will appear here automatically.</div> : <div className={styles.queueGrid}>{queue.pending.map((item) => (
             <article key={item.id} className={styles.queueCard}>
               <header><div className={styles.customerIdentity}><small>CUSTOMER</small><b>{item.name}</b><a className={styles.customerPhone} href={`tel:+88${item.phone}`}>{item.phone}</a></div><span>{timeAgo(item.requestedAt)}</span></header>
+              <div className={styles.billCheck}><small>SUBMITTED BILL</small><b>{money(item.billAmount)}</b><span>Verify this against the customer&apos;s receipt.</span></div>
               <div className={styles.queueProgress}><span>Current progress</span><span>{item.stampCount}/7</span></div>
+              <div className={styles.queueSpend}><span>Approved spend</span><b>{money(item.cycleSpend)}</b><span>After approval: {money(item.cycleSpend + item.billAmount)}</span></div>
               <div className={styles.progress}><span style={{ width: `${(item.stampCount / 7) * 100}%` }} /></div>
-              <div className={styles.queueActions}><button disabled={actingId !== null} onClick={() => void requestAction(item.id, "reject")}>Reject</button><button disabled={actingId !== null} onClick={() => void requestAction(item.id, "approve")}>{actingId === `approve-${item.id}` ? "Approving..." : "Approve stamp"}</button></div>
+              <div className={styles.queueActions}><button disabled={actingId !== null} onClick={() => void requestAction(item.id, "reject")}>Reject</button><button disabled={actingId !== null} onClick={() => void requestAction(item.id, "approve")}>{actingId === `approve-${item.id}` ? "Approving..." : "Amount matches — approve"}</button></div>
             </article>
           ))}</div>}
         </section>

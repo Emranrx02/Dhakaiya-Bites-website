@@ -12,12 +12,16 @@ type CustomerCard = {
   expiresAt: string | null;
   rewardReady: boolean;
   rewardsRedeemed: number;
+  cycleSpend: number;
+  rewardValue: number;
   stampsRequired: number;
+  rewardPercent: number;
 };
 
 type CardResponse = {
   requestStatus: "pending" | "approved" | "reward_ready";
   customer: CustomerCard;
+  pendingBillAmount?: number;
   message?: string;
   error?: string;
 };
@@ -27,12 +31,18 @@ function expiryLabel(value: string | null) {
   return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" }).format(new Date(value));
 }
 
+function money(value: number) {
+  return `৳${value.toLocaleString("en-BD")}`;
+}
+
 export default function RewardsClient() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [billAmount, setBillAmount] = useState("");
   const [card, setCard] = useState<CustomerCard | null>(null);
   const [status, setStatus] = useState<CardResponse["requestStatus"] | null>(null);
   const [message, setMessage] = useState("");
+  const [pendingBillAmount, setPendingBillAmount] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -43,6 +53,7 @@ export default function RewardsClient() {
       const data = (await response.json()) as CardResponse;
       setCard(data.customer);
       setStatus(data.requestStatus);
+      setPendingBillAmount(data.pendingBillAmount ?? null);
     } catch {
       // A temporary refresh failure should not clear the card already on screen.
     }
@@ -75,12 +86,13 @@ export default function RewardsClient() {
       const response = await fetch("/api/rewards/request", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name, phone }),
+        body: JSON.stringify({ name, phone, billAmount: Number(billAmount) }),
       });
       const data = (await response.json()) as CardResponse;
       if (!response.ok) throw new Error(data.error || "Could not request a stamp.");
       setCard(data.customer);
       setStatus(data.requestStatus);
+      setPendingBillAmount(data.pendingBillAmount ?? Number(billAmount));
       setMessage(data.message ?? "Stamp request sent.");
       localStorage.setItem("dhakaiya-rewards-phone", phone);
       localStorage.setItem("dhakaiya-rewards-name", name);
@@ -100,14 +112,14 @@ export default function RewardsClient() {
           <img src="/brand/logo.png" alt="Dhakaiya Bites" />
           <span><b>Dhakaiya Bites</b><small>REWARDS</small></span>
         </Link>
-        <div className={styles.rulePill}>7 stamps · 15 days · 1 free dish</div>
+        <div className={styles.rulePill}>7 bills · 15 days · 10% dish reward</div>
       </header>
 
       <section className={styles.mainGrid}>
         <div className={styles.content}>
           <div className={styles.eyebrow}>✦ EAT MORE. EARN MORE.</div>
           <h1>Your next favourite dish could be <em>on us.</em></h1>
-          <p className={styles.lead}>Scan in-store, request a stamp, and let our cashier approve it. Collect seven within fifteen days to unlock a free dish from the reward menu.</p>
+          <p className={styles.lead}>Submit each bill and let our cashier verify it. Complete seven approved bills within fifteen days, then choose one dish worth up to 10% of your total spend.</p>
 
           <div className={styles.stampCard}>
             <div className={styles.cardHeading}>
@@ -124,19 +136,30 @@ export default function RewardsClient() {
 
             {card && <div className={styles.cardMeta}><span>{card.phone}</span><span>Valid until: {expiryLabel(card.expiresAt)}</span></div>}
 
+            {card && (
+              <div className={styles.spendSummary}>
+                <div><small>APPROVED SPEND</small><b>{money(card.cycleSpend)}</b></div>
+                <div><small>10% DISH VALUE</small><b>{money(card.rewardValue)}</b></div>
+              </div>
+            )}
+
             {status === "reward_ready" ? (
-              <div className={styles.rewardReady}><b>🎁 Free dish unlocked!</b><span>Show this card to the cashier to redeem.</span></div>
+              <div className={styles.rewardReady}><b>🎁 {money(card?.rewardValue ?? 0)} dish reward unlocked!</b><span>Choose any one dish priced at or below this value, then ask the cashier to redeem it.</span></div>
+            ) : status === "pending" ? (
+              <div className={styles.pendingBill}><small>WAITING FOR CASHIER</small><b>{money((pendingBillAmount ?? Number(billAmount)) || 0)}</b><span>Keep your receipt ready. Your card will update automatically after approval.</span>{message && <p className={styles.success}>{message}</p>}</div>
             ) : (
               <form onSubmit={requestStamp} className={styles.form}>
                 <label htmlFor="reward-name">Your name</label>
                 <input id="reward-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Enter your name" autoComplete="name" required />
                 <label htmlFor="reward-phone">WhatsApp number</label>
                 <input id="reward-phone" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="01XXXXXXXXX" inputMode="tel" autoComplete="tel" required />
-                <small>One mobile number can open one reward card. No OTP is required.</small>
+                <label htmlFor="bill-amount">Today&apos;s bill amount</label>
+                <div className={styles.moneyInput}><span>৳</span><input id="bill-amount" type="number" min="1" max="100000" step="1" value={billAmount} onChange={(event) => setBillAmount(event.target.value)} placeholder="500" inputMode="numeric" required /></div>
+                <small>Enter the receipt total. The cashier will match it with your bill before approval. One mobile number opens one reward card; no OTP is required.</small>
                 {error && <p className={styles.error}>{error}</p>}
                 {message && <p className={styles.success}>{message}</p>}
-                <button disabled={loading || status === "pending"}>
-                  {loading ? "Sending request..." : status === "pending" ? "Waiting for cashier approval" : "Get stamp"}
+                <button disabled={loading}>
+                  {loading ? "Sending request..." : "Submit bill for approval"}
                 </button>
               </form>
             )}
@@ -145,20 +168,20 @@ export default function RewardsClient() {
 
         <div className={styles.foodVisual}>
           <img src="/brand/hot-chicken.jpg" alt="Dhakaiya Bites hot chicken" />
-          <div className={styles.foodCaption}><small>THE REWARD</small><b>One dish, completely free.</b></div>
+          <div className={styles.foodCaption}><small>THE REWARD</small><b>10% of your 7-bill spend toward one dish.</b></div>
         </div>
       </section>
 
       <section className={styles.steps}>
-        <div><small>SIMPLE BY DESIGN</small><h2>Three steps. One delicious reward.</h2></div>
+        <div><small>SIMPLE BY DESIGN</small><h2>Three steps. A reward based on your spend.</h2></div>
         <div className={styles.stepGrid}>
-          <article><span>01</span><b>Scan & enter</b><p>Scan the in-store QR and enter your name and WhatsApp number.</p></article>
-          <article><span>02</span><b>Cashier approves</b><p>Show your request after ordering. The cashier approves one stamp.</p></article>
-          <article><span>03</span><b>Enjoy it free</b><p>Complete seven stamps within fifteen days and unlock a free dish.</p></article>
+          <article><span>01</span><b>Scan & submit</b><p>Enter your name, WhatsApp number, and the total shown on today&apos;s bill.</p></article>
+          <article><span>02</span><b>Cashier verifies</b><p>The cashier matches the amount with your receipt and approves one bill.</p></article>
+          <article><span>03</span><b>Choose your dish</b><p>After seven approvals, choose one dish worth up to 10% of your total spend.</p></article>
         </div>
         <div className={styles.rewardFooter}>
           <span>© 2026 Dhakaiya Bites.</span>
-          <span>7 stamps · 15 days · 1 free dish</span>
+          <span>7 bills · 15 days · 10% dish reward</span>
         </div>
       </section>
     </main>

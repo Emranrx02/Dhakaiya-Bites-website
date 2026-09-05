@@ -1,4 +1,5 @@
 export const STAMPS_REQUIRED = 7;
+export const REWARD_PERCENT = 10;
 
 export type RewardCustomer = {
   id: string;
@@ -9,6 +10,8 @@ export type RewardCustomer = {
   expires_at: string | null;
   reward_ready: boolean;
   rewards_redeemed: number;
+  cycle_spend: number;
+  reward_value: number;
 };
 
 export function normalizeBangladeshPhone(value: string) {
@@ -35,6 +38,9 @@ export function customerResponse(customer: RewardCustomer) {
     expiresAt: customer.expires_at,
     rewardReady: customer.reward_ready,
     rewardsRedeemed: customer.rewards_redeemed,
+    cycleSpend: customer.cycle_spend,
+    rewardValue: customer.reward_value,
     stampsRequired: STAMPS_REQUIRED,
+    rewardPercent: REWARD_PERCENT,
   };
 }

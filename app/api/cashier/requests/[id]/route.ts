@@ -27,7 +27,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       return NextResponse.json({ ok: true, message: "Stamp request rejected." });
     }
 
-    const result = await supabaseRest<{ stampCount?: number; rewardReady?: boolean }>(
+    const result = await supabaseRest<{ stampCount?: number; rewardReady?: boolean; cycleSpend?: number; rewardValue?: number }>(
       "rpc/approve_stamp_request",
       { method: "POST", body: { p_request_id: id } },
     );
@@ -35,8 +35,8 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({
       ok: true,
       message: result?.rewardReady
-        ? "7 stamps complete — the customer has earned a free dish!"
-        : `Stamp approved. Progress is now ${stampCount}/7.`,
+        ? `7 bills complete — reward limit is ৳${Number(result.rewardValue ?? 0).toLocaleString("en-BD")}!`
+        : `Bill approved. Progress is now ${stampCount}/7; approved spend ৳${Number(result?.cycleSpend ?? 0).toLocaleString("en-BD")}.`,
     });
   } catch (error) {
     console.error("Cashier action failed", error);
