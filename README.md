@@ -24,8 +24,9 @@ Dhakaiya Bites is built as a restaurant-first marketing site with a dedicated me
 - Privacy protections for sensitive staff details
 - Direct call-to-order and map links
 - Responsive layout for mobile and desktop
-- Digital rewards card with 7-stamp / 15-day logic
-- Cashier approval and free-dish redemption portal
+- Digital rewards card with 7-bill / 15-day tracking
+- Spend-based dish reward worth 10% of the 7 approved bills
+- Cashier verification, approval, and reward redemption portal
 - Printable in-store rewards QR
 
 ## Project Structure

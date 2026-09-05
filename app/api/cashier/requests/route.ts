@@ -5,6 +5,7 @@ import { supabaseRest } from "@/lib/supabase-admin";
 type PendingRow = {
   id: string;
   requested_at: string;
+  bill_amount: number;
   customer: {
     id: string;
     name: string;
@@ -12,6 +13,8 @@ type PendingRow = {
     stamp_count: number;
     expires_at: string | null;
     reward_ready: boolean;
+    cycle_spend: number;
+    reward_value: number;
   } | Array<{
     id: string;
     name: string;
@@ -19,6 +22,8 @@ type PendingRow = {
     stamp_count: number;
     expires_at: string | null;
     reward_ready: boolean;
+    cycle_spend: number;
+    reward_value: number;
   }>;
 };
 
@@ -29,6 +34,8 @@ type RewardRow = {
   stamp_count: number;
   expires_at: string | null;
   rewards_redeemed: number;
+  cycle_spend: number;
+  reward_value: number;
 };
 
 export async function GET() {
@@ -39,10 +46,10 @@ export async function GET() {
   try {
     const [requestRows, rewardRows, customerRows] = await Promise.all([
       supabaseRest<PendingRow[]>(
-        "stamp_requests?status=eq.pending&select=id,requested_at,customer:customers(id,name,phone,stamp_count,expires_at,reward_ready)&order=requested_at.asc",
+        "stamp_requests?status=eq.pending&select=id,requested_at,bill_amount,customer:customers(id,name,phone,stamp_count,expires_at,reward_ready,cycle_spend,reward_value)&order=requested_at.asc",
       ),
       supabaseRest<RewardRow[]>(
-        "customers?reward_ready=eq.true&select=id,name,phone,stamp_count,expires_at,rewards_redeemed&order=updated_at.asc",
+        "customers?reward_ready=eq.true&select=id,name,phone,stamp_count,expires_at,rewards_redeemed,cycle_spend,reward_value&order=updated_at.asc",
       ),
       supabaseRest<Array<{ id: string; reward_ready: boolean }>>("customers?select=id,reward_ready"),
     ]);
@@ -59,6 +66,9 @@ export async function GET() {
         stampCount: customer.stamp_count,
         expiresAt: customer.expires_at,
         rewardReady: customer.reward_ready,
+        billAmount: request.bill_amount,
+        cycleSpend: customer.cycle_spend,
+        rewardValue: customer.reward_value,
       }];
     });
 
@@ -71,6 +81,8 @@ export async function GET() {
         stampCount: customer.stamp_count,
         expiresAt: customer.expires_at,
         rewardsRedeemed: customer.rewards_redeemed,
+        cycleSpend: customer.cycle_spend,
+        rewardValue: customer.reward_value,
       })),
       stats: {
         pending: pending.length,
