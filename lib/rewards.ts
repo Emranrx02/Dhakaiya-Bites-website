@@ -1,5 +1,6 @@
 export const STAMPS_REQUIRED = 7;
-export const REWARD_PERCENT = 10;
+export const REWARD_PERCENT = 20;
+export const REWARD_MAX_VALUE = 1000;
 
 export type RewardCustomer = {
   id: string;
@@ -42,5 +43,6 @@ export function customerResponse(customer: RewardCustomer) {
     rewardValue: customer.reward_value,
     stampsRequired: STAMPS_REQUIRED,
     rewardPercent: REWARD_PERCENT,
+    rewardMaxValue: REWARD_MAX_VALUE,
   };
 }
