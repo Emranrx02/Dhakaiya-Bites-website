@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import {Analytics} from "@vercel/analytics/next";
 import "./globals.css";
 import "./brand-update.css";
 import "./verification.css";
@@ -11,5 +12,5 @@ export const metadata:Metadata={
 };
 
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){
- return <html lang="bn" suppressHydrationWarning data-scroll-behavior="smooth"><body suppressHydrationWarning>{children}</body></html>;
+ return <html lang="bn" suppressHydrationWarning data-scroll-behavior="smooth"><body suppressHydrationWarning>{children}<Analytics/></body></html>;
 }
