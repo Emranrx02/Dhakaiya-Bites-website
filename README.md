@@ -25,7 +25,7 @@ Dhakaiya Bites is built as a restaurant-first marketing site with a dedicated me
 - Direct call-to-order and map links
 - Responsive layout for mobile and desktop
 - Digital rewards card with 7-bill / 15-day tracking
-- One free dish after 7 approved bills, capped at 10% of their total spend
+- One free dish after 7 approved bills, worth 20% of their total spend and capped at ৳1,000
 - Cashier verification, approval, and reward redemption portal
 - Printable in-store rewards QR
 

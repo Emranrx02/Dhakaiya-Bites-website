@@ -16,6 +16,7 @@ type CustomerCard = {
   rewardValue: number;
   stampsRequired: number;
   rewardPercent: number;
+  rewardMaxValue: number;
 };
 
 type CardResponse = {
@@ -119,7 +120,7 @@ export default function RewardsClient() {
         <div className={styles.content}>
           <div className={styles.eyebrow}>✦ EAT MORE. EARN MORE.</div>
           <h1>Your next favourite dish could be <em>on us.</em></h1>
-          <p className={styles.lead}>Submit each bill and let our cashier verify it. Complete seven approved bills within fifteen days to get one dish free—up to 10% of your total spend.</p>
+          <p className={styles.lead}>Submit each bill and let our cashier verify it. Complete seven approved bills within fifteen days to get one dish free—worth 20% of your total spend, up to ৳1,000.</p>
 
           <div className={styles.stampCard}>
             <div className={styles.cardHeading}>
@@ -168,7 +169,7 @@ export default function RewardsClient() {
 
         <div className={styles.foodVisual}>
           <img src="/brand/hot-chicken.jpg" alt="Dhakaiya Bites hot chicken" />
-          <div className={styles.foodCaption}><small>THE REWARD</small><b>One dish free, worth up to 10% of your spend.</b></div>
+          <div className={styles.foodCaption}><small>THE REWARD</small><b>One dish free: 20% of your spend, up to ৳1,000.</b></div>
         </div>
       </section>
 
@@ -177,7 +178,7 @@ export default function RewardsClient() {
         <div className={styles.stepGrid}>
           <article><span>01</span><b>Scan & submit</b><p>Enter your name, WhatsApp number, and the total shown on today&apos;s bill.</p></article>
           <article><span>02</span><b>Cashier verifies</b><p>The cashier matches the amount with your receipt and approves one bill.</p></article>
-          <article><span>03</span><b>Enjoy 1 free dish</b><p>After seven approvals, choose one free dish worth up to 10% of your total spend.</p></article>
+          <article><span>03</span><b>Enjoy 1 free dish</b><p>After seven approvals, choose one free dish worth 20% of your total spend, up to ৳1,000.</p></article>
         </div>
         <div className={styles.rewardFooter}>
           <span>© 2026 Dhakaiya Bites.</span>
