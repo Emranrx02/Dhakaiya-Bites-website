@@ -114,7 +114,7 @@ begin
     v_cycle_spend := v_customer.cycle_spend + v_request.bill_amount;
   end if;
 
-  v_reward_value := floor(v_cycle_spend * 0.10)::integer;
+  v_reward_value := least(1000, floor(v_cycle_spend * 0.20)::integer);
 
   update public.customers
   set stamp_count = v_count,
