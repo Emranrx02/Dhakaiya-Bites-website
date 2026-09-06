@@ -35,7 +35,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({
       ok: true,
       message: result?.rewardReady
-        ? `7 bills complete — reward limit is ৳${Number(result.rewardValue ?? 0).toLocaleString("en-BD")}!`
+        ? `7 bills complete — 1 free dish unlocked up to ৳${Number(result.rewardValue ?? 0).toLocaleString("en-BD")}!`
         : `Bill approved. Progress is now ${stampCount}/7; approved spend ৳${Number(result?.cycleSpend ?? 0).toLocaleString("en-BD")}.`,
     });
   } catch (error) {

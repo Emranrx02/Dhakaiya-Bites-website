@@ -112,14 +112,14 @@ export default function RewardsClient() {
           <img src="/brand/logo.png" alt="Dhakaiya Bites" />
           <span><b>Dhakaiya Bites</b><small>REWARDS</small></span>
         </Link>
-        <div className={styles.rulePill}>7 bills · 15 days · 10% dish reward</div>
+        <div className={styles.rulePill}>7 bills · 15 days · 1 free dish</div>
       </header>
 
       <section className={styles.mainGrid}>
         <div className={styles.content}>
           <div className={styles.eyebrow}>✦ EAT MORE. EARN MORE.</div>
           <h1>Your next favourite dish could be <em>on us.</em></h1>
-          <p className={styles.lead}>Submit each bill and let our cashier verify it. Complete seven approved bills within fifteen days, then choose one dish worth up to 10% of your total spend.</p>
+          <p className={styles.lead}>Submit each bill and let our cashier verify it. Complete seven approved bills within fifteen days to get one dish free—up to 10% of your total spend.</p>
 
           <div className={styles.stampCard}>
             <div className={styles.cardHeading}>
@@ -139,12 +139,12 @@ export default function RewardsClient() {
             {card && (
               <div className={styles.spendSummary}>
                 <div><small>APPROVED SPEND</small><b>{money(card.cycleSpend)}</b></div>
-                <div><small>10% DISH VALUE</small><b>{money(card.rewardValue)}</b></div>
+                <div><small>FREE DISH LIMIT</small><b>{money(card.rewardValue)}</b></div>
               </div>
             )}
 
             {status === "reward_ready" ? (
-              <div className={styles.rewardReady}><b>🎁 {money(card?.rewardValue ?? 0)} dish reward unlocked!</b><span>Choose any one dish priced at or below this value, then ask the cashier to redeem it.</span></div>
+              <div className={styles.rewardReady}><b>🎁 1 free dish unlocked!</b><span>Choose any one dish priced at or below {money(card?.rewardValue ?? 0)}, then ask the cashier to redeem it.</span></div>
             ) : status === "pending" ? (
               <div className={styles.pendingBill}><small>WAITING FOR CASHIER</small><b>{money((pendingBillAmount ?? Number(billAmount)) || 0)}</b><span>Keep your receipt ready. Your card will update automatically after approval.</span>{message && <p className={styles.success}>{message}</p>}</div>
             ) : (
@@ -168,7 +168,7 @@ export default function RewardsClient() {
 
         <div className={styles.foodVisual}>
           <img src="/brand/hot-chicken.jpg" alt="Dhakaiya Bites hot chicken" />
-          <div className={styles.foodCaption}><small>THE REWARD</small><b>10% of your 7-bill spend toward one dish.</b></div>
+          <div className={styles.foodCaption}><small>THE REWARD</small><b>One dish free, worth up to 10% of your spend.</b></div>
         </div>
       </section>
 
@@ -177,11 +177,11 @@ export default function RewardsClient() {
         <div className={styles.stepGrid}>
           <article><span>01</span><b>Scan & submit</b><p>Enter your name, WhatsApp number, and the total shown on today&apos;s bill.</p></article>
           <article><span>02</span><b>Cashier verifies</b><p>The cashier matches the amount with your receipt and approves one bill.</p></article>
-          <article><span>03</span><b>Choose your dish</b><p>After seven approvals, choose one dish worth up to 10% of your total spend.</p></article>
+          <article><span>03</span><b>Enjoy 1 free dish</b><p>After seven approvals, choose one free dish worth up to 10% of your total spend.</p></article>
         </div>
         <div className={styles.rewardFooter}>
           <span>© 2026 Dhakaiya Bites.</span>
-          <span>7 bills · 15 days · 10% dish reward</span>
+          <span>7 bills · 15 days · 1 free dish</span>
         </div>
       </section>
     </main>

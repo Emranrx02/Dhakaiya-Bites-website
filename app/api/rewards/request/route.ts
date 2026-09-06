@@ -61,7 +61,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         requestStatus: "reward_ready",
         customer: customerResponse(customer),
-        message: `Your ৳${customer.reward_value} dish reward is ready. Ask the cashier to redeem it first.`,
+        message: `Your free dish is ready. Choose one priced at or below ৳${customer.reward_value}.`,
       });
     }
 

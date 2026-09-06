@@ -198,8 +198,8 @@ export default function CashierClient() {
         {notice && <p className={styles.noticeMessage}>{notice}</p>}
         {error && <p className={styles.error}>{error}</p>}
 
-        {queue.rewards.length > 0 && <section className={styles.queueSection}><h2>Dish rewards ready</h2><div className={styles.queueGrid}>{queue.rewards.map((reward) => (
-          <article key={reward.customerId} className={styles.rewardQueueCard}><div className={styles.rewardCustomer}><small>CUSTOMER</small><b>{reward.name}</b><a className={styles.customerPhone} href={`tel:+88${reward.phone}`}>{reward.phone}</a><div className={styles.cashierRewardValue}><span>Reward limit</span><b>{money(reward.rewardValue)}</b></div><p>7-bill spend: {money(reward.cycleSpend)} · Redeemed before: {reward.rewardsRedeemed}</p></div><button className={styles.redeemButton} disabled={actingId !== null} onClick={() => void redeem(reward.customerId)}>{actingId === `redeem-${reward.customerId}` ? "Redeeming..." : `Redeem up to ${money(reward.rewardValue)}`}</button></article>
+        {queue.rewards.length > 0 && <section className={styles.queueSection}><h2>Free dishes ready</h2><div className={styles.queueGrid}>{queue.rewards.map((reward) => (
+          <article key={reward.customerId} className={styles.rewardQueueCard}><div className={styles.rewardCustomer}><small>CUSTOMER</small><b>{reward.name}</b><a className={styles.customerPhone} href={`tel:+88${reward.phone}`}>{reward.phone}</a><div className={styles.cashierRewardValue}><span>FREE DISH LIMIT</span><b>{money(reward.rewardValue)}</b></div><p>7-bill spend: {money(reward.cycleSpend)} · Redeemed before: {reward.rewardsRedeemed}</p></div><button className={styles.redeemButton} disabled={actingId !== null} onClick={() => void redeem(reward.customerId)}>{actingId === `redeem-${reward.customerId}` ? "Redeeming..." : `Redeem free dish · max ${money(reward.rewardValue)}`}</button></article>
         ))}</div></section>}
 
         <section className={styles.queueSection}><h2>Waiting for approval</h2>
